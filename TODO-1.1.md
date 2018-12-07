@@ -21,7 +21,7 @@ module.exports = ( EXTERNAL_DEPENDENCIES ) => ({
   ` ),
   description: `Toggles the specified class value (adds or removes)`,
   assert: {
-    node: AssertValue
+    node: EXTERNAL_DEPENDENCIES.AssertValue
   },
   params: [{
     title: "", // Section title e.g. Options
@@ -30,7 +30,7 @@ module.exports = ( EXTERNAL_DEPENDENCIES ) => ({
       cols: [{
         span: 12, // https://ant.design/components/grid/
         name: "params.name",
-        control: INPUT,
+        control: EXTERNAL_DEPENDENCIES.INPUT,
         label: "CSS class value",
         help: "",
         placeholder: "e.g. .has-error",
