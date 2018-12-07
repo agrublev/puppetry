@@ -13,7 +13,9 @@
 - existing schema (e.g. `./src/component/Schema/Params/Element/toggleClass.js` must be refactored) to something like that:
 
 ```js
-return {
+
+
+module.exports = ( EXTERNAL_DEPENDENCIES ) => ({
   template: ( command ) => `
     Puppeteer code .. ${ command.params.name }, ${ command.targetSeletor }
   ` ),
@@ -40,5 +42,7 @@ return {
       }]
     }]
   }]
-}
+})
 ```
+
+- where EXTERNAL_DEPENDENCIES, can be ant.design input components, assertion components and helper functions
