@@ -46,3 +46,10 @@ module.exports = ( EXTERNAL_DEPENDENCIES ) => ({
 ```
 
 - where EXTERNAL_DEPENDENCIES, can be ant.design input components, assertion components and helper functions
+
+# Links
+
+- https://code.visualstudio.com/docs/extensions/overview
+- https://code.visualstudio.com/docs/extensionAPI/overview
+- https://itnext.io/how-to-make-a-visual-studio-code-extension-77085dce7d82
+- https://code.visualstudio.com/docs/extensionAPI/extension-manifest
