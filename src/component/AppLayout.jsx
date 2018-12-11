@@ -17,6 +17,9 @@ import { TestReportModal  } from "./Modal/TestReportModal";
 import { ExportProjectModal } from "./Modal/ExportProjectModal";
 import { OpenSuiteModal } from "./Modal/OpenSuiteModal";
 import { CommandModal } from "./AppLayout/Main/GroupTable/TestTable/CommandModal";
+// @TODO REMOVE it
+import TestForm from "./AppLayout/Main/GroupTable/TestTable/CommandTable/Params/TestForm";
+
 import { InstallRuntimeTestModal } from "./Modal/InstallRuntimeTestModal";
 import { TabGroup  } from "./TabGroup";
 import If from "component/Global/If";
@@ -93,10 +96,11 @@ export class AppLayout extends React.Component {
 
               <div className="layout-content">
 
-                <If exp={ tabsAnyTrue }>
+                <TestForm />
+                <If exp={ false }>
                   <TabGroup action={ action } store={ store } />
                 </If>
-                <If exp={ !tabsAnyTrue }>
+                <If exp={ false }>
                   <Welcome action={ action } projectDirectory={ projectDirectory } />
                 </If>
 

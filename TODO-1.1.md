@@ -24,7 +24,7 @@ module.exports = ( EXTERNAL_DEPENDENCIES ) => ({
     node: EXTERNAL_DEPENDENCIES.AssertValue
   },
   params: [{
-    title: "", // Section title e.g. Options
+    legend: "", // Section title e.g. Options
     rows: [{  // Grid layout (https://ant.design/components/form/)
       description: "",
       cols: [{
