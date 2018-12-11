@@ -9,6 +9,7 @@ import { exportProject, getRuntimeTestPath } from "service/io";
 import { millisecondsToStr } from "service/utils";
 import { Icon, Spin, Button } from "antd";
 import { join } from "path";
+import { TestGeneratorError } from "error";
 
 let counter = 0;
 
@@ -41,7 +42,11 @@ export class TestReport extends AbstractComponent {
     try {
       this.runtimeTemp = getRuntimeTestPath();
       this.setState({ loading: true });
-      const specList = await exportProject( this.props.projectDirectory, this.runtimeTemp, this.props.checkedList ),
+      const specList = await exportProject(
+              this.props.projectDirectory,
+              this.runtimeTemp,
+              this.props.checkedList,
+              this.props.headless ),
             report = ipcRenderer.sendSync( E_RUN_TESTS, this.runtimeTemp, specList );
 
       this.setState({
@@ -50,9 +55,10 @@ export class TestReport extends AbstractComponent {
         ok: true
       });
     } catch ( err ) {
+      const message = err instanceof TestGeneratorError ? "Test parser error" : "Cannot run tests";
       this.props.action.setError({
         visible: true,
-        message: "Cannot export project",
+        message,
         description: err.message
       });
     }
