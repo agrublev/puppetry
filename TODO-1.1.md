@@ -4,7 +4,10 @@
 - Puppetry will store enable/disable/remove snippet list in JSON file in app asset directory
 - Shared snippets also available via public repo e.g. `puppetry-snippets`
   - new snippets can be published like (Homebrew casks)[https://github.com/Homebrew/homebrew-cask/tree/master/Casks] with a PR on a separate git repo
-
+  
+## Testing  
+- schema contains info for unit-testing. So unit-tests reads from schme object, run for every spec test where creates a shallow copy, feeds it with wrong types check erros state, feeds with right and check all fine
+  
 ## Implementation ideas
 - injects custom snippets via await `import("")` (? or Electron native require - `global.require` ?)
 
