@@ -56,13 +56,15 @@ export default class AbstractEditableTable extends AbstractDnDTable {
     return values.some( state => !state.value ) || values.some( state => !!state.error );
   }
 
-  toggleEdit = ( id, editing ) => {
+  toggleEdit = ( id, editing, e ) => {
+    e && e.stopPropagation();
     const update = this.props.action[ `update${this.model}` ];
     document.body.classList.toggle( "disable-dnd", editing );
     update( this.extendActionOptions({ id, editing }) );
   }
 
-  cancelEdit = ( record ) => {
+  cancelEdit = ( record, e ) => {
+    e && e.stopPropagation();
     const isNew = this.fields.map( field => record[ field ]).every( value => !value );
     this.toggleEdit( record.id, false );
     if ( isNew ) {
@@ -70,7 +72,8 @@ export default class AbstractEditableTable extends AbstractDnDTable {
     }
   }
 
-  onSubmit = ( id ) => {
+  onSubmit = ( id, e ) => {
+    e && e.stopPropagation();
     const form = this.state.fieldState[ id ],
           options = this.fields.reduce( ( carry, field ) => {
             carry[ field ] = form[ field ].value;
@@ -125,12 +128,12 @@ export default class AbstractEditableTable extends AbstractDnDTable {
               size="small"
               className={ `btn--submit-editable model--${ this.model }` }
               disabled={ this.hasErrors( record.id ) }
-              onClick={( () => this.onSubmit( record.id ) )}
+              onClick={( e => this.onSubmit( record.id, e ) )}
             >Save</Button>
 
             <Divider type="vertical" />
 
-            <a tabIndex={21} role="button" onClick={() => this.cancelEdit( record )}>Cancel</a>
+            <a tabIndex={21} role="button" onClick={ e => this.cancelEdit( record, e ) }>Cancel</a>
           </span> );
         }
         return (
@@ -138,13 +141,18 @@ export default class AbstractEditableTable extends AbstractDnDTable {
 
 
             <a className="link--action" tabIndex={-1}
-              role="button" onClick={() => this.toggleEdit( record.id, true )}>Edit</a>
+              role="button" onClick={ e => this.toggleEdit( record.id, true, e )}>Edit</a>
 
             <Divider type="vertical" />
 
-            <Popconfirm title="Sure to delete?" onConfirm={() => this.removeRecord( record.id )}>
+            <span onClick={( e ) => {
+              // stop propagation for Table.expandRowByClick={ true }
+              e.stopPropagation();
+            }}>
+            <Popconfirm title="Sure to delete?" onConfirm={ e => this.removeRecord( record.id )}>
               <a className="link--action">Delete</a>
             </Popconfirm>
+            </span>
           </span>
         );
       }

@@ -88,6 +88,7 @@ export class GroupTable extends AbstractEditableTable {
             pagination={false}
             onExpand={this.onExpand}
             expandedRowRender={ this.renderExpandedTable }
+            expandRowByClick={ true }
             footer={() => ( <Button
               id="cGroupTableAddBtn"
               onClick={ this.addRecord }><Icon type="plus" />Add a group</Button> )}
