@@ -234,6 +234,42 @@ export const reducer = handleActions(
         }});
     },
 
+    [ actions.toggleExpandGroup ]: ( state, { payload }) => {
+      const [ inx ] = Object.entries( state.project.groups )
+        .find( entry => entry[ 1 ].key === payload.id );
+      return update( state, {
+        project: {
+          groups: {
+            [ inx ]: {
+              value: {
+                $set: payload.toggle
+              }
+            }
+          }
+        }});
+    },
+
+    [ actions.toggleExpandTest ]: ( state, { payload }) => {
+      const [ groupInx ] = Object.entries( state.project.groups )
+              .find( entry => entry[ 1 ].key === payload.groupId ),
+            [ inx ] = Object.entries( state.project.groups[ groupInx ].tests )
+              .find( entry => entry[ 1 ].key === payload.id );
+      return update( state, {
+        project: {
+          groups: {
+            [ groupInx ]: {
+              tests: {
+                [ inx ]: {
+                  value: {
+                    $set: payload.toggle
+                  }
+                }
+              }
+            }
+          }
+        }});
+    },
+
     [ actions.updateGroup ]: ( state, { payload }) => {
 
       return update( state, {

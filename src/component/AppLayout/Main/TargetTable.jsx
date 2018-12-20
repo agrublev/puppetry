@@ -20,6 +20,7 @@ export class TargetTable extends AbstractEditableTable {
           <EditableCell
             record={ record }
             onSubmit={ this.onSubmit }
+            onAddNew={ this.addRecord }
             dataIndex="target"
             className="input--target"
             placeholder="Enter target name"

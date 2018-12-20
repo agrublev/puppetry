@@ -92,7 +92,6 @@ export class TestTable extends AbstractEditableTable {
           columns={ this.columns }
           onExpand={ this.onExpand }
           pagination={ false }
-          expandRowByClick={ true }
           footer={() => ( <Button
             id="cTestTableAddBtn"
             onClick={ this.addRecord }><Icon type="plus" />Add a test</Button> )}

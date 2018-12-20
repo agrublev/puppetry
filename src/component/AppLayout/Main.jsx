@@ -49,7 +49,10 @@ export class Main extends React.Component {
             </TabPane>
 
             <TabPane tab={ groupsLabel } key="groups">
-              <p>You can use drag&apos;n&apos;drop to re-arrange rows representing tests or test groups.</p>
+              <p>You can use drag&apos;n&apos;drop to re-arrange rows representing tests or test groups.
+              You can also right click on rows to call the context menu for enabling/disabling and cloning.
+              While editing groups and tests press <kbd>Enter</kbd> to submit changes and
+              <kbd>Ctrl-Enter</kbd> to submit and add a new row. </p>
               <GroupTable
                 action={action}
                 expanded={store.project.groups}

@@ -8,6 +8,7 @@ export class EditableCell extends React.Component {
   static propTypes = {
     dataIndex: PropTypes.string.isRequired,
     onSubmit: PropTypes.func,
+    onAddNew: PropTypes.func,
     placeholder: PropTypes.string.isRequired,
     className: PropTypes.string,
     record: PropTypes.object.isRequired,
@@ -48,6 +49,9 @@ export class EditableCell extends React.Component {
     switch ( e.key ){
     case "Enter":
       this.props.onSubmit && this.props.onSubmit( record.id );
+      if ( e.ctrlKey && this.props.onAddNew ) {
+        this.props.onAddNew();
+      }
       return;
     }
   }

@@ -41,6 +41,10 @@ const STORAGE_KEY_SETTINGS = "settings",
 
         SET_PROJECT: ( options ) => options,
 
+        TOGGLE_EXPAND_GROUP: ( options ) => options,
+
+        TOGGLE_EXPAND_TEST: ( options ) => options,
+
         SET_SUITE: ( options ) => validate( "updateSuiteOptions", options ),
 
         RESET_SUITE: ( options ) => validate( "updateSuiteOptions", options ),
