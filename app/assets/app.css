@@ -67,6 +67,14 @@ body .smalltalk {
   margin-bottom: 0;
 }
 
+.ant-alert-error.command-form-alert {
+  margin-bottom: 16px;
+}
+
+.command-section-description {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
 .command-row-description {
   font-size: 13px;
   line-height: 18px;

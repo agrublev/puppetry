@@ -131,10 +131,10 @@ export class ParamsFormBuilder extends React.Component {
       decoratorOptions.valuePropName = ( initialValue ? "checked" : "data-ok" );
       decoratorOptions.initialValue = true;
     }
+
     return (<Col span={ field.span || 12 } key={ `field_${ inx }` }>
 
       <FormItem
-        help={ field.help || "" }
         label={ field.control !== CHECKBOX ? labelNode : "" }>
         { getFieldDecorator( field.name, decoratorOptions )( this.renderControl( field ) ) }
 
@@ -175,7 +175,9 @@ export class ParamsFormBuilder extends React.Component {
 
       </legend>
       <If exp={ section.description }>
-        <p>{ section.description }</p>
+        <Markdown
+        md={ section.description }
+        className="command-section-description" />
       </If>
 
        { section.fields && section.fields
@@ -189,7 +191,6 @@ export class ParamsFormBuilder extends React.Component {
 
   render() {
     const { schema } = this.props;
-
     return (
       <ErrorBoundary>
         { schema.params.map( this.renderSection ) }
