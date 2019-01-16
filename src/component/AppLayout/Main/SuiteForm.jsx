@@ -11,6 +11,7 @@ export class SuiteForm extends AbstractForm {
 
   static propTypes = {
     title: PropTypes.string,
+    timeout: PropTypes.number,
     form: PropTypes.shape({
       validateFieldsAndScroll: PropTypes.func.isRequired,
       getFieldDecorator: PropTypes.func.isRequired,
@@ -40,7 +41,7 @@ export class SuiteForm extends AbstractForm {
     const { getFieldDecorator, getFieldsError } = this.props.form;
 
     return (
-      <Form layout="inline" className="suite-form" onSubmit={ this.onSubmit }>
+      <Form id="cSuiteForm" layout="inline" className="suite-form" onSubmit={ this.onSubmit }>
         <FormItem  label="Suite title">
           { getFieldDecorator( "title", {
             initialValue: this.props.title,
@@ -81,6 +82,7 @@ export class SuiteForm extends AbstractForm {
         </FormItem>
         <FormItem>
           <Button
+            id="cSuiteFormChangeBtn"
             type="primary"
             htmlType="submit"
             disabled={ this.hasErrors( getFieldsError() ) }

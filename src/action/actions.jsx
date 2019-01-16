@@ -12,7 +12,8 @@ import { closeApp } from "service/utils";
 import { InvalidArgumentError } from "error";
 import DEFAULT_STATE from "reducer/defaultState";
 import { ipcRenderer, remote } from "electron";
-import { E_FILE_NAVIGATOR_UPDATED, E_WATCH_FILE_NAVIGATOR, E_PROJECT_LOADED, E_SUITE_LOADED } from "constant";
+import { E_FILE_NAVIGATOR_UPDATED, E_WATCH_FILE_NAVIGATOR,
+  E_PROJECT_LOADED, E_SUITE_LOADED, E_SUITE_LIST_UPDATED } from "constant";
 import { getDateString, checkNewVersion } from "../service/http";
 import debounce from "lodash.debounce";
 
@@ -132,7 +133,9 @@ actions.saveSettings = ( payload ) => ( dispatch, getState ) => {
 };
 
 actions.loadSettings = () => ( dispatch, getState ) => {
-  const saved = JSON.parse( localStorage.getItem( STORAGE_KEY_SETTINGS ) || "{}" ),
+  const saved = process.env.PUPPETRY_CLEAN_START
+          ? {}
+          : JSON.parse( localStorage.getItem( STORAGE_KEY_SETTINGS ) || "{}" ),
         settings = { ...getState().settings, ...saved };
   dispatch( actions.setSettings( settings ) );
   return settings;
@@ -175,8 +178,10 @@ actions.watchProjectFiles = ( directory = null ) => async ( dispatch, getState )
 };
 
 actions.loadProjectFiles = ( directory = null ) => async ( dispatch, getState ) => {
-  const projectDirectory = directory || getState().settings.projectDirectory,
+  const store = getState(),
+        projectDirectory = directory || store.settings.projectDirectory,
         files = await getProjectFiles( projectDirectory );
+  ipcRenderer.send( E_SUITE_LIST_UPDATED, projectDirectory, store.suite.filename, files );
   dispatch( actions.updateApp({ project: { files }}) );
 };
 
@@ -241,11 +246,12 @@ actions.createSuite = ( rawFilename, title ) => async ( dispatch, getState ) => 
 };
 
 actions.loadSuite = ( filename ) => async ( dispatch, getState ) => {
-  const { projectDirectory } = getState().settings,
+  const store = getState(),
+        { projectDirectory } = store.settings,
         suite = await readSuite( projectDirectory, filename );
   dispatch( actions.setProject({ lastOpenSuite: filename }) );
   dispatch( actions.resetSuite({ ...suite, loadedAt: new Date(), filename, modified: false }) );
-  ipcRenderer.send( E_SUITE_LOADED, projectDirectory, filename );
+  ipcRenderer.send( E_SUITE_LOADED, projectDirectory, filename, store.app.project.files );
   dispatch( actions.addAppTab( "suite" ) );
 };
 

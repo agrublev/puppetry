@@ -12,6 +12,10 @@ const { Menu, MenuItem } = remote;
 @connectDnD
 export class CommandTable extends AbstractDnDTable {
 
+  state = {
+    contextMenuAnchor: null
+  }
+
   constructor( props ) {
     super( props );
     this.columns = [
@@ -37,6 +41,11 @@ export class CommandTable extends AbstractDnDTable {
   onContextMenu = ( e, record  ) => {
     e.preventDefault();
     const menu = new Menu();
+
+    this.setState({ contextMenuAnchor: record.id });
+    menu.on( "menu-will-close", () => {
+      this.setState({ contextMenuAnchor: null });
+    });
 
     menu.append( new MenuItem({
       label: "Edit",
@@ -134,7 +143,7 @@ export class CommandTable extends AbstractDnDTable {
   }
 
   onRowClassName = ( record ) => {
-    return `model--command${ record.disabled ? " row-disabled" : "" }` ;
+    return `model--command${ record.disabled ? " row-disabled" : "" } ` + this.getRightClickClassName( record );
   }
 
   render() {
@@ -142,6 +151,7 @@ export class CommandTable extends AbstractDnDTable {
     return ( <ErrorBoundary>
       <Table
         className="draggable-table"
+        id="cCommandTable"
         components={ this.components }
         rowClassName={ this.onRowClassName }
         onRow={ this.onRow }
@@ -149,7 +159,9 @@ export class CommandTable extends AbstractDnDTable {
         dataSource={ commands }
         columns={ this.columns }
         pagination={ false }
-        footer={() => ( <Button onClick={ this.addRecord }><Icon type="plus" />Add a command</Button> )}
+        footer={() => ( <Button
+          id="cCommandTableAddBtn"
+          onClick={ this.addRecord }><Icon type="plus" />Add a command</Button> )}
       />
     </ErrorBoundary> );
   }

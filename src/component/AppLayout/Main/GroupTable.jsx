@@ -21,6 +21,8 @@ export class GroupTable extends AbstractEditableTable {
           <EditableCell
             prefixIcon={ recordPrefIcon }
             record={ record }
+            onSubmit={ this.onSubmit }
+            className="input--title"
             dataIndex="title"
             placeholder="Describe target or scenario you want to test"
             liftFormStateUp={ this.liftFormStateUp }
@@ -61,7 +63,7 @@ export class GroupTable extends AbstractEditableTable {
   }
 
   onRowClassName = ( record ) => {
-    return `model--group${ record.disabled ? " row-disabled" : "" }` ;
+    return `model--group${ record.disabled ? " row-disabled" : "" } ` + this.getRightClickClassName( record );
   }
 
   render() {
@@ -74,6 +76,7 @@ export class GroupTable extends AbstractEditableTable {
       <div className="box-margin-vertical group-table">
         <ErrorBoundary>
           <Table
+            id="cGroupTable"
             className="draggable-table"
             components={this.components}
             onRow={this.onRow}
@@ -85,7 +88,9 @@ export class GroupTable extends AbstractEditableTable {
             pagination={false}
             onExpand={this.onExpand}
             expandedRowRender={ this.renderExpandedTable }
-            footer={() => ( <Button onClick={ this.addRecord }><Icon type="plus" />Add a group</Button> )}
+            footer={() => ( <Button
+              id="cGroupTableAddBtn"
+              onClick={ this.addRecord }><Icon type="plus" />Add a group</Button> )}
           />
         </ErrorBoundary>
       </div>

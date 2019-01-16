@@ -5,7 +5,10 @@ import ErrorBoundary from "component/ErrorBoundary";
 import { Form, Input, InputNumber, Checkbox, Row, Col, Select, Radio  } from "antd";
 import validate from "oproba";
 import Tooltip from "component/Global/Tooltip";
-import { TEXTAREA, RADIO_GROUP, INPUT, INPUT_NUMBER, CHECKBOX, SELECT } from "component/Schema/constants";
+import { TEXTAREA, RADIO_GROUP, INPUT, INPUT_NUMBER, CHECKBOX, SELECT,
+  SEARCH_SELECT } from "component/Schema/constants";
+import Markdown from "component/Global/Markdown";
+
 const FormItem = Form.Item,
       Option = Select.Option,
       RadioGroup = Radio.Group,
@@ -129,19 +132,25 @@ export class ParamsFormBuilder extends React.Component {
       decoratorOptions.initialValue = true;
     }
     return (<Col span={ field.span || 12 } key={ `field_${ inx }` }>
+
       <FormItem
-        label={ field.control !== CHECKBOX ? field.label : "" }>
+        help={ field.help || "" }
+        label={ field.control !== CHECKBOX ? labelNode : "" }>
         { getFieldDecorator( field.name, decoratorOptions )( this.renderControl( field ) ) }
-        { field.description ? <div className="command-opt-description">{ field.description }</div> : "" }
+
       </FormItem>
     </Col>);
   };
 
   renderRow = ( row, inx ) => {
     validate.obj({
+      description: "S?",
       fields: "A"
     }, row );
     return (<Row gutter={16} key={ `row_${ inx }` } className="ant-form-inline edit-command-inline">
+      { row.description ? <Markdown
+        md={ row.description }
+        className="command-row-description" /> : "" }
       { row.fields.map( this.renderField ) }
     </Row>);
   };

@@ -121,7 +121,7 @@ export class CommandForm extends React.Component {
 
     return (
       <ErrorBoundary>
-        <Form onSubmit={this.handleSubmit} className="command-form">
+        <Form onSubmit={this.handleSubmit} className="command-form" id="cCommandForm">
           <If exp={ this.state.error }>
             <Alert
               message="Notice"
@@ -187,6 +187,7 @@ export class CommandForm extends React.Component {
                   schema={ schema }
                   targets={ targets }
                   record={ safeRecord }
+                  onSubmit={ this.handleSubmit }
                   form={ this.props.form } />
               </ErrorBoundary>
             </fieldset>

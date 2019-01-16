@@ -5,6 +5,9 @@ import { Form, Modal, Input, Button } from "antd";
 import ErrorBoundary from "component/ErrorBoundary";
 import BrowseDirectory from "component/Global/BrowseDirectory";
 import { A_FORM_ITEM_ERROR, A_FORM_ITEM_SUCCESS } from "constant";
+import { isDirEmpty } from "service/io";
+import { confirmCreateProject } from "service/smalltalk";
+import * as classes from "./classes";
 
 const FormItem = Form.Item,
       connectForm = Form.create();
@@ -35,7 +38,7 @@ export class NewProjectModal extends AbstractForm {
     this.props.action.updateApp({ newProjectModal: false });
   }
 
-  onClickOk = ( e ) => {
+  onClickOk = async ( e ) => {
     const { validateFields } = this.props.form,
           { updateApp, saveSettings, saveProject } = this.props.action,
           projectDirectory = this.state.selectedDirectory || this.props.projectDirectory;
@@ -43,6 +46,11 @@ export class NewProjectModal extends AbstractForm {
     e.preventDefault();
 
     if ( !this.isBrowseDirectoryValid() ) {
+      return;
+    }
+
+    console.log( 44,  projectDirectory , isDirEmpty( projectDirectory ) );
+    if ( !isDirEmpty( projectDirectory ) && !await confirmCreateProject() ) {
       return;
     }
 
@@ -80,13 +88,20 @@ export class NewProjectModal extends AbstractForm {
       <ErrorBoundary>
         <Modal
           title="New Project"
+          className="c-new-project-modal"
           visible={ isVisible }
           closable
           onCancel={this.onClickCancel}
           onOk={this.onClickOk}
           footer={[
-            ( <Button key="back" onClick={this.onClickCancel}>Cancel</Button> ),
-            ( <Button key="submit" type="primary"
+            ( <Button
+              key="back"
+              className={ classes.BTN_CANCEL }
+              onClick={this.onClickCancel}>Cancel</Button> ),
+            ( <Button
+              key="submit"
+              type="primary"
+              className={ classes.BTN_OK }
               disabled={ this.hasErrors( getFieldsError() ) || this.state.locked }
               autoFocus={ true }
               onClick={this.onClickOk}>
@@ -94,7 +109,7 @@ export class NewProjectModal extends AbstractForm {
             </Button> )
           ]}
         >
-          <Form >
+          <Form>
             <FormItem  label="Project name">
               { getFieldDecorator( "name", {
                 initialValue: projectName,
@@ -103,7 +118,7 @@ export class NewProjectModal extends AbstractForm {
                   message: "Please enter project name"
                 }]
               })(
-                <Input placeholder="Project name" />
+                <Input placeholder="Project name" onKeyPress={ ( e ) => this.onKeyPress( e, this.onClickOk ) } />
               )}
             </FormItem>
 

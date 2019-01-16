@@ -20,6 +20,7 @@ schema = {
 
       rows: [
         {
+          description: "You can use available tags like \"{{BASE_URL}}/foo\" [Manage stagging tags](http://dsheiko.com)",
           fields: [
             {
               span: 6,
@@ -27,6 +28,7 @@ schema = {
               control: INPUT,
               label: "Foo",
               tooltip: "Foo tooltip",
+              help: "The information is being validated...",
               placeholder: "foo placeholder",
               rules: [{
                 required: true,
@@ -37,13 +39,50 @@ schema = {
             {
               span: 6,
               name: "params.bar",
+              tooltip: "Foo tooltip Foo tooltip Foo tooltip Foo tooltip Foo tooltip Foo tooltip Foo tooltip",
               control: INPUT_NUMBER,
+              description: `aa aaa aaa`,
               label: "Bar",
               rules: [{
                 required: true,
                 message: "???"
               }]
             }
+          ]
+        },
+
+        {
+          description: "You can use available tags like \"{{BASE_URL}}/foo\" [Manage stagging tags](http://dsheiko.com)",
+          fields: [
+            {
+              span: 24,
+              name: "params.goto",
+              control: INPUT,
+              label: "Goto",
+              placeholder: "https://puppetry.app",
+              rules: [{
+                required: true,
+                message: "???"
+              }]
+            }
+          ]
+        },
+
+        {
+          description: "You can use available tags like {{BASE_URL}} see [link](http://dsheiko.com)",
+          fields: [
+            {
+              span: 24,
+              name: "params.select",
+              control: SELECT,
+              label: "Select",
+              options: [
+                { value: 1, description: "ONE "},
+                { value: 2, description: "TWO "},
+                { value: 3, description: "THREE "}
+              ]
+            }
+
           ]
         }
       ]

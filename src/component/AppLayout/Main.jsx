@@ -33,8 +33,8 @@ export class Main extends React.Component {
 
     return (
       <ErrorBoundary>
-        <div>
-          <SuiteForm  action={action} title={ store.suite.title } />
+        <div id="cMain">
+          <SuiteForm  action={action} title={ store.suite.title } timeout={ store.suite.timeout } />
 
           <Tabs
             activeKey={ activeKey }

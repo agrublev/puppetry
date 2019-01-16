@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { remote } from "electron";
+import classNames  from "classnames";
 import {  Spin, Layout } from "antd";
 import ErrorBoundary from "component/ErrorBoundary";
 import { Toolbar } from "./AppLayout/Toolbar";
@@ -8,6 +9,7 @@ import { MainMenu } from "./AppLayout/Sider/MainMenu";
 import { ProjectNavigator  } from "./AppLayout/Sider/ProjectNavigator";
 import { AppFooter } from "./AppLayout/AppFooter";
 import { Welcome } from "./AppLayout/Welcome";
+import { Info } from "./AppLayout/Info";
 import { NewProjectModal  } from "./Modal/NewProjectModal";
 import { OpenProjectModal  } from "./Modal/OpenProjectModal";
 import { SaveSuiteAsModal  } from "./Modal/SaveSuiteAsModal";
@@ -51,7 +53,10 @@ export class AppLayout extends React.Component {
     return (
       <ErrorBoundary>
         <Spin spinning={store.app.loading} size="large">
-          <Layout className="layout">
+          <Layout className={classNames({
+            layout: true,
+            "is-loading": store.app.loading
+          })} id="cLayout">
 
             <Sider
               collapsible
@@ -74,6 +79,7 @@ export class AppLayout extends React.Component {
 
               <MainMenu
                 action={ action }
+                files={ store.app.project.files }
                 projectDirectory={ projectDirectory }
                 suiteFilename={ store.suite.filename }
                 suiteModified={ store.suite.modified }
@@ -100,8 +106,10 @@ export class AppLayout extends React.Component {
                 <If exp={ false }>
                   <TabGroup action={ action } store={ store } />
                 </If>
-                <If exp={ false }>
-                  <Welcome action={ action } projectDirectory={ projectDirectory } />
+                <If exp={ !tabsAnyTrue }>
+                  { projectDirectory ? ( <Info action={ action } store={ store } /> )
+                    : ( <Welcome action={ action } projectDirectory={ projectDirectory } /> )
+                  }
                 </If>
 
               </div>
@@ -128,6 +136,9 @@ export class AppLayout extends React.Component {
         <OpenSuiteModal
           action={action}
           projectDirectory={ projectDirectory }
+          suiteModified={ store.suite.modified }
+          files={ store.app.project.files }
+          active={ store.suite.filename }
           isVisible={store.app.openSuiteModal} />
 
         <SaveSuiteAsModal

@@ -21,6 +21,8 @@ export class TestTable extends AbstractEditableTable {
         render: ( text, record ) => (
           <EditableCell
             prefixIcon={ recordPrefIcon }
+            onSubmit={ this.onSubmit }
+            className="input--title"
             record={ record }
             dataIndex="title"
             placeholder="Describe the assertions you want to perform"
@@ -69,7 +71,7 @@ export class TestTable extends AbstractEditableTable {
   }
 
   onRowClassName = ( record ) => {
-    return `model--test${ record.disabled ? " row-disabled" : "" }` ;
+    return `model--test${ record.disabled ? " row-disabled" : "" } ` + this.getRightClickClassName( record );
   }
 
   render() {
@@ -79,6 +81,7 @@ export class TestTable extends AbstractEditableTable {
       <ErrorBoundary>
         <Table
           className="draggable-table"
+          id="cTestTable"
           components={this.components}
           onRow={this.onRow}
           rowClassName={ this.onRowClassName }
@@ -89,7 +92,9 @@ export class TestTable extends AbstractEditableTable {
           columns={ this.columns }
           onExpand={ this.onExpand }
           pagination={ false }
-          footer={() => ( <Button onClick={ this.addRecord }><Icon type="plus" />Add a test</Button> )}
+          footer={() => ( <Button
+            id="cTestTableAddBtn"
+            onClick={ this.addRecord }><Icon type="plus" />Add a test</Button> )}
         />
       </ErrorBoundary>
     );
