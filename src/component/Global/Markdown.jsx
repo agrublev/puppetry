@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AbstractComponent from "component/AbstractComponent";
-import * as MarkdownIt from "markdown-it";
+// going with require as "markdown-it" has no default export, and unit-tests do not support import * as alias
+const MarkdownIt = require( "markdown-it" );
 
 const parser = new MarkdownIt();
 
