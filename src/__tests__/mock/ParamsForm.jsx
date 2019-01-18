@@ -5,11 +5,9 @@ import If from "component/Global/If";
 import { ParamsFormBuilder } from "component/AppLayout/Main/GroupTable/TestTable/CommandTable/Params/ParamsFormNewBuilder";
 import { TEXTAREA, RADIO_GROUP, INPUT, INPUT_NUMBER, CHECKBOX, SELECT } from "component/Schema/constants";
 
-const FormItem = Form.Item,
-      connectForm = Form.create();
+const FormItem = Form.Item;
 
-@connectForm
-export default class ParamsForm extends React.Component {
+class ParamsFormCore extends React.Component {
 
   state = {
     formError: ""
@@ -63,3 +61,5 @@ export default class ParamsForm extends React.Component {
 
 };
 
+const ParamsForm = Form.create()( ParamsFormCore );
+export default ParamsForm;
