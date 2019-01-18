@@ -19,7 +19,7 @@
   },
   "main": "./app/main.js",
   "scripts": {
-    "test": "jest --config=jest.cfg.unit.js --no-cache",
+    "test": "jest --config=jest.cfg.unit.js",
     "test:e2e": "jest --config=jest.cfg.e2e.js --runInBand",
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch  --config webpack.config.js",
