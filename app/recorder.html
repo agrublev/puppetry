@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src *; img-src * data: https:; media-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'">
+  <title>Recorder</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"
+  >
+  <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./assetsfavicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+
+  <style>
+    webview {
+      width: 100%;
+      height: calc(100vh - 32px);
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    URL:
+
+    <button id="pull">Pull</button>
+    <button id="close">Close</button>
+  </div>
+  <webview src="https://dsheiko.github.io/react-html5-form/" preload="./recorder/webview/index.js"></webview>
+  <script src="./recorder/renderer.js"></script>
+  <script>
+
+
+  </script>
+</body>
+
+</html>

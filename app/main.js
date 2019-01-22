@@ -32,7 +32,6 @@ function createWindow() {
   }
 
 
-
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -51,6 +50,7 @@ function createWindow() {
     protocol: "file:",
     slashes: true
   }) );
+
 
   require( "./main/menu" )( mainWindow );
   require( "./main/event-dispatcher" );

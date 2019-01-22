@@ -26,6 +26,7 @@ exports.E_ENTITY_CREATED = "entityCreated";
 
 exports.E_FILE_NAVIGATOR_UPDATED = "fileNavigatorUpdated";
 exports.E_WATCH_FILE_NAVIGATOR = "watchFileNavigator";
+exports.E_OPEN_RECORDER_WINDOW = "openRecorderWindow";
 
 exports.A_FORM_ITEM_SUCCESS = "success";
 exports.A_FORM_ITEM_WARNING = "warning";

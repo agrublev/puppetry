@@ -5,7 +5,9 @@ import { Form, Modal, Button, Input, Row, Col, Collapse } from "antd";
 import ErrorBoundary from "component/ErrorBoundary";
 import If from "component/Global/If";
 import { normalizeFilename } from "service/io";
+import { ipcRenderer } from "electron";
 import * as classes from "./classes";
+import { E_OPEN_RECORDER_WINDOW } from "constant";
 
 /*eslint no-useless-escape: 0*/
 
@@ -31,6 +33,10 @@ export class NewSuiteModal extends AbstractForm {
   state = {
     displayFilename: ""
   };
+
+  onClickRecord = ( e ) => {
+    ipcRenderer.send( E_OPEN_RECORDER_WINDOW );
+  }
 
   onClickCancel = ( e ) => {
     e.preventDefault();
@@ -73,6 +79,11 @@ export class NewSuiteModal extends AbstractForm {
           closable
           onCancel={this.onClickCancel}
           footer={[
+            ( <Button
+              key="record"
+              onClick={this.onClickRecord}>
+              Record
+            </Button> ),
             ( <Button
               autoFocus={ true }
               className={ classes.BTN_OK }
