@@ -17,8 +17,11 @@ webview.addEventListener( "ipc-message", e => {
     }, false );
 
 
- document.querySelector( "#close" )
-    .addEventListener( "click", ( e ) => {
-      e.preventDefault();
-      remote.getCurrentWindow().close();
+ document.querySelector( "#url" )
+    .addEventListener( "keyup", ( e ) => {
+      if ( e.which === 13 ) {
+        e.preventDefault();
+        webview.src = e.target.value;
+      }
+
     }, false );

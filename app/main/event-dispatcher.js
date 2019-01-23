@@ -75,7 +75,7 @@ ipcMain.on( E_OPEN_RECORDER_WINDOW, async ( event ) => {
     height: 820,
     minWidth: 960,
     minHeight: 540,
-    frame: false,
+    frame: true,
     devTools: process.env.ELECTRON_ENV === "dev",
     title: "Puppetry Recorder"
   });

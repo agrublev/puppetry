@@ -15,6 +15,11 @@
     }
 
     function log( command, params ) {
+      const last = commands[ commands.length - 1 ];
+      // repeating input, take only the last commmand as it will be used with el.type()
+      if ( command === "input" &&  last.command === command && params.target === last.params.target ) {
+        commands.pop();
+      }
       commands.push({ command, params });
     }
 
@@ -32,6 +37,13 @@
       static onMouseMove( e ) {
         log( "move", { x: e.screenX, y: e.screenY } );
       }
+      static onKeyUp( e ) {
+        // Ctrl-Shift-S - make a screenshot
+        if ( e.which === 83 && e.ctrlKey && e.shiftKey ) {
+
+        }
+        log( "screenshot", {} );
+      }
     }
 
     Recorder.onInputInput = debounce( ( e ) => {
@@ -47,6 +59,8 @@
 
     document.addEventListener( "DOMContentLoaded", () => {
       document.body.addEventListener( "click", Recorder.onElClick );
+
+      window.addEventListener( "keyup", onKeyUp );
 
       document.addEventListener("mousemove", debounce( Recorder.onMouseMove, 200 ), false);
       window.addEventListener("resize", debounce( Recorder.onWindowResize, 200 ), false);

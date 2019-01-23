@@ -17,6 +17,85 @@
   <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
 
   <style>
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+    }
+
+    body {
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+    svg {
+      fill: currentColor;
+    }
+
+    .toolbar {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+    }
+    .toolbar__url {
+      font-size: 16px;
+      line-height: 18px;
+      border-radius: 4px;
+      background: white;
+      border: 1px solid gray;
+      padding: 0 4px;
+      width: 100%;
+    }
+    .toolbar__url:focus {
+      border: 1px solid #0069d9;
+      outline: none;
+    }
+    button {
+      display: inline-block;
+      font-weight: 400;
+      text-align: center;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      background-image: none;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      padding: 0 15px;
+      font-size: 14px;
+      border-radius: 4px;
+      height: 24px;
+      user-select: none;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      position: relative;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+      color: rgba(0, 0, 0, 0.65);
+      background-color: #fff;
+      margin-left: 8px;
+    }
+    .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+    .recording-icon {
+      width: 16px;
+      height: 16px;
+      animation: pulse 2s infinite;
+      margin-left: 8px;
+    }
+    .recording-icon svg {
+      width: 16px;
+      height: 16px;
+    }
     webview {
       width: 100%;
       height: calc(100vh - 32px);
@@ -25,11 +104,16 @@
 </head>
 
 <body>
-  <div>
-    URL:
 
-    <button id="pull">Pull</button>
-    <button id="close">Close</button>
+  <div class="toolbar">
+    <input id="url" type="url" class="toolbar__url" placeholder="URL..." />
+
+    <div class="recording-icon">
+      <svg>
+        <circle cx="8" cy="8" r="8" fill="red" />
+      </svg>
+    </div>
+    <button class="btn-primary" id="pull">Done</button>
   </div>
   <webview src="https://dsheiko.github.io/react-html5-form/" preload="./recorder/webview/index.js"></webview>
   <script src="./recorder/renderer.js"></script>
