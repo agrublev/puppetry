@@ -71,10 +71,10 @@ ipcMain.on( E_OPEN_RECORDER_WINDOW, async ( event ) => {
 
   // Create the browser window.
   recorderWindow = new BrowserWindow({
-    width: 1400,
-    height: 820,
-    minWidth: 960,
-    minHeight: 540,
+    width: 1366,
+    height: 768,
+    minWidth: 320,
+    minHeight: 200,
     frame: true,
     devTools: process.env.ELECTRON_ENV === "dev",
     title: "Puppetry Recorder"
