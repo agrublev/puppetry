@@ -2,15 +2,13 @@ const { ipcMain, dialog, remote, BrowserWindow } = require( "electron" ),
       { E_BROWSE_DIRECTORY, E_DIRECTORY_SELECTED, E_RUN_TESTS,
         E_TEST_REPORTED, E_WATCH_FILE_NAVIGATOR, E_BROWSE_FILE, E_FILE_SELECTED,
         E_INSTALL_RUNTIME_TEST, E_SHOW_CONFIRM_DIALOG, E_CONFIRM_DIALOG_VALUE,
-        E_OPEN_RECORDER_WINDOW
+        E_OPEN_RECORDER_WINDOW, E_RECEIVE_RECORDER_SESSION
       } = require( "../constant" ),
       watchFiles = require( "./file-watcher" ),
       { installRuntimeTest } = require( "./install-runtime-test" ),
       path = require( "path" ),
       url = require( "url" ),
       runTests = require( "./test-runner" );
-
-let recorderWindow;
 
 ipcMain.on( E_SHOW_CONFIRM_DIALOG, async ( event, runtimeTestDirectory ) => {
    const res = dialog.showMessageBox( {
@@ -70,7 +68,7 @@ ipcMain.on( E_WATCH_FILE_NAVIGATOR, async ( event, projectDirectory ) => {
 ipcMain.on( E_OPEN_RECORDER_WINDOW, async ( event ) => {
 
   // Create the browser window.
-  recorderWindow = new BrowserWindow({
+  const recorderWindow = new BrowserWindow({
     width: 1366,
     height: 768,
     minWidth: 320,
@@ -88,5 +86,8 @@ ipcMain.on( E_OPEN_RECORDER_WINDOW, async ( event ) => {
   }) );
 
   recorderWindow.focus();
+});
 
+ipcMain.on( E_RECEIVE_RECORDER_SESSION, async ( event, targets, commands ) => {
+  console.log("PONG!", {targets, commands});
 });
